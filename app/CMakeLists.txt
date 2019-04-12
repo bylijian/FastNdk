@@ -10,14 +10,38 @@ cmake_minimum_required(VERSION 3.4.1)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-add_library( # Sets the name of the library.
-        native-lib
+include_directories(src/main/cpp/helper)
+include_directories(src/main/cpp)
 
-        # Sets the library as a shared library.
-        SHARED
+#add_library( # Sets the name of the library.
+#        native-lib
+#
+#        # Sets the library as a shared library.
+#        SHARED
+#
+#        # Provides a relative path to your source file(s).
+#        src/main/cpp/native-lib.cpp)
 
-        # Provides a relative path to your source file(s).
-        src/main/cpp/native-lib.cpp)
+
+# 编译
+
+#设置变量SRC_DIR为cpp的所在路径
+set(SRC_DIR src/main/cpp)
+
+#指定头文件所在，可以多次调用，指定多个路径
+include_directories(src/main/cpp)
+include_directories(src/main/cpp/helper)
+
+#添加自自定义的so库时，有两种方式，一种添加一个目录，一种一个个文件添加
+
+#设定一个目录
+aux_source_directory(src/main/cpp SRC_LIST)
+aux_source_directory(src/main/cpp/helper HELPER_SRC_LIST)
+
+#将前面目录下所有的文件都添加进去
+add_library(native-lib SHARED ${SRC_LIST}
+        ${HELPER_SRC_LIST})
+
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -35,6 +59,7 @@ find_library( # Sets the name of the path variable.
 # Specifies libraries CMake should link to your target library. You
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
+
 
 target_link_libraries( # Specifies the target library.
         native-lib
