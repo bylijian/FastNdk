@@ -15,6 +15,7 @@ private:
 
 public:
 
+    //必须是static才能使用JNI_OnLoad注册
     static void test1(JNIEnv *env, jobject thiz) {
         LOGD("test1");
     }
