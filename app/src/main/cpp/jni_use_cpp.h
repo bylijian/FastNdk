@@ -7,16 +7,20 @@
 
 #include <jni.h>
 #include <string>
-#include "helper/jni_log.h"
+#include "jni_log.h"
 
 class Test {
-protected:
+private:
+
 
 public:
-    jstring jni_use_cpp(JNIEnv *env, jobject thiz) {
-        LOGD("jni_use_cpp");
-        std::string hello = "Hello from C++";
-        return env->NewStringUTF(hello.c_str());
+
+    static void test1(JNIEnv *env, jobject thiz) {
+        LOGD("test1");
+    }
+
+    static void test2(JNIEnv *env, jobject thiz, jstring msg) {
+        LOGD("test2");
     }
 };
 
